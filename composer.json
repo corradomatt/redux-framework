@@ -11,10 +11,5 @@
   "require" : {
     "php" : ">=5.2.0",
     "composer/installers": "~1.0"
-  },
-  "extra": {
-        "installer-paths": {
-            "third-party/{$name}/": ["shama/ftp", "corradomatt/redux-framework"]
-        }
-    }
+  }
 }
