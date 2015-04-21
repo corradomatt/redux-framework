@@ -1,5 +1,5 @@
 === Redux Framework ===
-Contributors: dovyp, kprovance, section214
+Contributors: corradomatt, dovyp, kprovance, section214
 Requires at least: 3.5.1
 Tested up to: 4.2
 Stable tag: 3.5.3.1

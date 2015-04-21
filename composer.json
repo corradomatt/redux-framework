@@ -6,6 +6,7 @@
     }
   ],
   "description": "Redux is a simple, truly extensible options framework for WordPress themes and plugins.",
+  "type": "wordpress-plugin",
   "homepage": "http://homejunction.com",
   "license": "GPL-3.0+",
   "require" : {
