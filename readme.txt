@@ -1,6 +1,6 @@
 === Redux Framework ===
 Contributors: corradomatt, dovyp, kprovance, section214
-Requires at least: 3.5.1
+Requires at least: 3.5.0
 Tested up to: 4.2
 Stable tag: 3.5.3.1
 License: GPLv3 or later
