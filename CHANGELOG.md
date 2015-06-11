@@ -1,4 +1,86 @@
-    # Redux Framework Changelog
+# Redux Framework Changelog
+
+## 3.5.4.18
+* Modified: Templates to properly excape values.
+* Fixed:    Import/Export to properly be full-width and use lazy-load JS.
+* Modified: CSS for sections to bound to the section, not all of Redux.
+
+## 3.5.4.17
+* Fixed:    #2368 - Options panel layout offset.
+* Fixed:    #2369 - validate_callback not working for color, color_gradient, and date.
+
+## 3.5.4.16
+* Fixed:    #2355 - Space missing in switch class arg.
+* Fixed:    Fixed all fields without leading space in class arg.
+
+## 3.5.4.15
+* Modified: Restrict table modification to redux-container.
+* Fixed:    Container overflow for pre's.
+* Modified: Redux API to include removeSection and removeField.
+* Added:    Added before and after hooks to any panel template file.
+
+## 3.5.4.14
+* Fixed:    #2351 - WP_Error check added to admin blast remote get.
+
+## 3.5.4.13
+* Modified: Moved styling for the divide field into it's own CSS file.
+* Modified: All WP Color Pickers to properly save the value before save.
+* Added:    CSS Styles for the customizer.  ;)
+
+## 3.5.4.12
+* Modified: Panel is MUCH more responsive now.
+* Fixed:    Small stylings for a few fields.
+* Fixed:    Added extra qTip class.
+
+## 3.5.4.11
+* Modified: Ajax save animation. Added fallback for pre 4.2 CSS.
+* Fixed:    Small issue with Redux info boxes and spacing.
+* Fixed:    Small bug with the Redux API where divide sections were causing errors.
+* Fixed:    Small admin blast fix.
+
+## 3.5.4.10
+* Modified: Qtip and Spectrum vendor libraries restored to local.
+* Fixed:    Admin notice loading on front end.
+* Modified: Callback actions run with do_action_ref_array now.
+* Added:    show_options_object argument to enable or disable option object.
+
+## 3.5.4.9
+* Added:    Error suppressing to filesystem class to avoid notice errors when site goes down.
+
+## 3.5.4.8
+* Fixed:    Panels not rendering, again
+* Added:    Vendor support plugin link to CDN fallback message.
+
+## 3.5.4.7
+* Modified: Moved vendor libraries ACE, select2, qtip, and spectrum to CDN.
+* Removed:  Local installs of above libraries.
+
+## 3.5.4.6
+* Fixed:    Option panel not rendering due to experimental code.
+
+## 3.5.4.5
+* Fixed:    How sorter works with data
+* Modified: How the data arg is stored in Redux.
+
+## 3.5.4.4
+* Removed:  sysinfo.php.  No longer needed in lieu of our support URL feature.
+* Removed:  debug.php.  Moved to options_object extension.
+* Modified: #2274 - PHP Unit test compatibility.  Thanks @daithi-coombes.
+* Modified: #2144 - Optional class argument per image.  Thanks @paulthecoder.
+* Fixed:    #2278 - More W3 Total Cache hacks.
+    
+## 3.5.4.3
+* Fixed:    #2258 - welcome redirect error with embedding plugin scenarios.
+* Fixed:    Redux plugin load order when activating plugins.
+
+## 3.5.4.2
+* Fixed:    #2271 - stuck redirect on godaddy (seriously, get a real host, people) servers.
+
+## 3.5.4.1
+* Fixed:    #2216 - Reset section not always working within FF.
+    
+## 3.5.4
+* Modified: update_notice arg only truly shows up if dev_mode is on.
 
 ## 3.5.3.3
 * Added:    Tooltip to developer mode badge, for informational purposes.

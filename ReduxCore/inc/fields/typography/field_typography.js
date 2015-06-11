@@ -102,10 +102,9 @@
                         // Have to redeclare the wpColorPicker to get a callback function
                         $( this ).find( '.redux-typography-color' ).wpColorPicker(
                             {
-                                change: function( event, ui ) {
-                                    redux_change( $( this ) );
+                                change: function( e, ui ) {
                                     $( this ).val( ui.color.toString() );
-                                    redux.field_objects.typography.select( $( this ) );
+                                    redux.field_objects.typography.select( $( this ).parents( '.redux-container-typography:first' ) );
                                 }
                             }
                         );
@@ -232,7 +231,7 @@
                                 selVals = val;
                                 isSelecting = true;
 
-                                redux_change( $( this ) );
+                                redux.field_objects.typography.select( $( this ).parents( '.redux-container-typography:first' ) );
                             }
                         ).on(
                             'select2-clearing', function( val, choice ) {
@@ -243,7 +242,7 @@
 
                                 $( '#' + thisID + ' #' + thisID + '-google-font' ).val( 'false' );
 
-                                redux_change( $( this ) );
+                                redux.field_objects.typography.select( $( this ).parents( '.redux-container-typography:first' ) );
                             }
                         );
 
@@ -315,6 +314,11 @@
 
         // Main id for selected field
         var mainID = $( selector ).parents( '.redux-container-typography:first' ).attr( 'data-id' );
+        var parent = $( selector ).parents( '.redux-container-typography:first' );
+        var data = [];
+        //$.each(parent.find('.redux-typography-field'), function() {
+        //    console.log();
+        //});
 
         // Set all the variables to be checked against
         var family = $( '#' + mainID + ' #' + mainID + '-family' ).val();
@@ -336,6 +340,8 @@
         var script = $( '#' + mainID + ' select.redux-typography-subsets' ).val();
         var color = $( '#' + mainID + ' .redux-typography-color' ).val();
         var units = $( '#' + mainID ).data( 'units' );
+        //console.log('here3');
+        //console.log(color);
 
         //var output = family;
 
@@ -431,7 +437,9 @@
                         } else {
                             selected = "";
                         }
-                        html += '<option value="' + subset.id + '"' + selected + '>' + subset.name.replace(/\+/g, " ") + '</option>';
+                        html += '<option value="' + subset.id + '"' + selected + '>' + subset.name.replace(
+                            /\+/g, " "
+                        ) + '</option>';
                     }
                 );
 
@@ -575,6 +583,7 @@
 
         // Show more preview stuff
         if ( $( '#' + mainID ).hasClass( 'typography-initialized' ) ) {
+            //console.log('here2');
             var isPreviewSize = $( '#' + mainID + ' .typography-preview' ).data( 'preview-size' );
 
             if ( isPreviewSize == '0' ) {
@@ -630,6 +639,8 @@
         }
 
         isSelecting = false;
+
+        redux_change( selector );
 
     };
 })( jQuery );
