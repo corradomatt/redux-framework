@@ -78,14 +78,9 @@
                 //*****************************************************************
                 // Select2 CSS
                 //*****************************************************************
-                $css_file = 'select2.min.css';
-                if ($this->parent->args['dev_mode']) {
-                    $css_file = 'select2.css';
-                }
-                
                 Redux_CDN::register_style(
                     'select2-css',
-                    'https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/' . $css_file,
+                    '//cdn.jsdelivr.net/select2/3.5.2/select2.css',
                     array(),
                     '3.5.2',//$this->timestamp,
                     'all'
@@ -212,14 +207,18 @@
                 //*****************************************************************
                 // Select2 JS
                 //*****************************************************************
-                $js_file = 'select2.min.js';
-                if ($this->parent->args['dev_mode']) {
-                    $js_file = 'select2.js';
+                
+                // JWp6 plugin giving us problems.  They need to update.
+                if (  wp_script_is ( 'jquerySelect2' )) {
+                    wp_deregister_script( 'jquerySelect2' );
+                    wp_dequeue_script('jquerySelect2');
+                    wp_dequeue_style('jquerySelect2Style');
                 }
+                
                 
                 Redux_CDN::register_script(
                     'select2-js',
-                    'https://cdnjs.cloudflare.com/ajax/libs/select2/3.5.2/' . $js_file,
+                    '//cdn.jsdelivr.net/select2/3.5.2/select2' . $this->min . '.js',
                     array( 'jquery', 'redux-select2-sortable-js' ),
                     '3.5.2',
                     true
@@ -294,55 +293,59 @@
                 );
             }
 
+            public function _enqueue_field($field) {
+                // TODO AFTER GROUP WORKS - Revert IF below
+                // if( isset( $field['type'] ) && $field['type'] != 'callback' ) {
+                if ( isset( $field['type'] ) && $field['type'] != 'callback' ) {
+
+                    $field_class = 'ReduxFramework_' . $field['type'];
+
+                    /**
+                     * Field class file
+                     * filter 'redux/{opt_name}/field/class/{field.type}
+                     *
+                     * @param       string        field class file path
+                     * @param array $field        field config data
+                     */
+                    $class_file = apply_filters( "redux/{$this->parent->args['opt_name']}/field/class/{$field['type']}", ReduxFramework::$_dir . "inc/fields/{$field['type']}/field_{$field['type']}.php", $field );
+                    if ( $class_file ) {
+                        if ( ! class_exists( $field_class ) ) {
+                            if ( file_exists( $class_file ) ) {
+                                require_once $class_file;
+                            }
+                        }
+
+                        if ( ( method_exists( $field_class, 'enqueue' ) ) || method_exists( $field_class, 'localize' ) ) {
+
+                            if ( ! isset( $this->parent->options[ $field['id'] ] ) ) {
+                                $this->parent->options[ $field['id'] ] = "";
+                            }
+                            $theField = new $field_class( $field, $this->parent->options[ $field['id'] ], $this->parent );
+
+                            // Move dev_mode check to a new if/then block
+                            if ( ! wp_script_is( 'redux-field-' . $field['type'] . '-js', 'enqueued' ) && class_exists( $field_class ) && method_exists( $field_class, 'enqueue' ) ) {
+                                $theField->enqueue();
+                            }
+
+                            if ( method_exists( $field_class, 'localize' ) ) {
+                                $params = $theField->localize( $field );
+                                if ( ! isset( $this->parent->localize_data[ $field['type'] ] ) ) {
+                                    $this->parent->localize_data[ $field['type'] ] = array();
+                                }
+                                $this->parent->localize_data[ $field['type'] ][ $field['id'] ] = $theField->localize( $field );
+                            }
+
+                            unset( $theField );
+                        }
+                    }
+                }
+            }
+
             private function enqueue_fields() {
                 foreach ( $this->parent->sections as $section ) {
                     if ( isset( $section['fields'] ) ) {
                         foreach ( $section['fields'] as $field ) {
-                            // TODO AFTER GROUP WORKS - Revert IF below
-                            // if( isset( $field['type'] ) && $field['type'] != 'callback' ) {
-                            if ( isset( $field['type'] ) && $field['type'] != 'callback' ) {
-
-                                $field_class = 'ReduxFramework_' . $field['type'];
-
-                                /**
-                                 * Field class file
-                                 * filter 'redux/{opt_name}/field/class/{field.type}
-                                 *
-                                 * @param       string        field class file path
-                                 * @param array $field        field config data
-                                 */
-                                $class_file = apply_filters( "redux/{$this->parent->args['opt_name']}/field/class/{$field['type']}", ReduxFramework::$_dir . "inc/fields/{$field['type']}/field_{$field['type']}.php", $field );
-                                if ( $class_file ) {
-                                    if ( ! class_exists( $field_class ) ) {
-                                        if ( file_exists( $class_file ) ) {
-                                            require_once( $class_file );
-                                        }
-                                    }
-
-                                    if ( ( method_exists( $field_class, 'enqueue' ) ) || method_exists( $field_class, 'localize' ) ) {
-
-                                        if ( ! isset( $this->parent->options[ $field['id'] ] ) ) {
-                                            $this->parent->options[ $field['id'] ] = "";
-                                        }
-                                        $theField = new $field_class( $field, $this->parent->options[ $field['id'] ], $this->parent );
-
-                                        // Move dev_mode check to a new if/then block
-                                        if ( ! wp_script_is( 'redux-field-' . $field['type'] . '-js', 'enqueued' ) && class_exists( $field_class ) && method_exists( $field_class, 'enqueue' ) ) {
-                                            $theField->enqueue();
-                                        }
-
-                                        if ( method_exists( $field_class, 'localize' ) ) {
-                                            $params = $theField->localize( $field );
-                                            if ( ! isset( $this->parent->localize_data[ $field['type'] ] ) ) {
-                                                $this->parent->localize_data[ $field['type'] ] = array();
-                                            }
-                                            $this->parent->localize_data[ $field['type'] ][ $field['id'] ] = $theField->localize( $field );
-                                        }
-
-                                        unset( $theField );
-                                    }
-                                }
-                            }
+                            $this->_enqueue_field( $field );
                         }
                     }
                 }
@@ -429,7 +432,7 @@
                     }
                 }
 
-                if ( isset( $this->parent->args['dev_mode'] ) && $this->parent->args['dev_mode'] == true ) {
+                if ( isset( $this->parent->args['dev_mode'] ) && $this->parent->args['dev_mode'] == true || $this->parent->args['dev_mode'] == false && isset($this->parent->args['forced_dev_mode_off']) && $this->parent->args['forced_dev_mode_off'] == true ) {
                     $nonce                               = wp_create_nonce( 'redux-ads-nonce' );
                     $base                                = admin_url( 'admin-ajax.php' ) . '?action=redux_p&nonce=' . $nonce . '&url=';
                     $this->parent->localize_data['rAds'] = Redux_Helpers::rURL_fix( $base, $this->parent->args['opt_name'] );

@@ -31,7 +31,7 @@
         }
     );
 
-    redux.field_objects.typography.init = function( selector ) {
+    redux.field_objects.typography.init = function( selector, skipCheck) {
 
         if ( !selector ) {
             selector = $( document ).find( ".redux-group-tab:visible" ).find( '.redux-container-typography:visible' );
@@ -79,7 +79,7 @@
 
                                 fontClear = Boolean( $( this ).find( '.redux-font-clear' ).val() );
 
-                                redux.field_objects.typography.select( family );
+                                redux.field_objects.typography.select( family, true );
 
                                 window.onbeforeunload = null;
                             }
@@ -310,16 +310,21 @@
 
 
     //  Sync up font options
-    redux.field_objects.typography.select = function( selector ) {
-
+    redux.field_objects.typography.select = function( selector, skipCheck ) {
+        var mainID;
+        
         // Main id for selected field
-        var mainID = $( selector ).parents( '.redux-container-typography:first' ).attr( 'data-id' );
+        mainID = $( selector ).parents( '.redux-container-typography:first' ).attr( 'data-id' );
+        if (mainID === undefined) {
+            mainID = $(selector).attr( 'data-id' );
+        }
+        
         var parent = $( selector ).parents( '.redux-container-typography:first' );
         var data = [];
         //$.each(parent.find('.redux-typography-field'), function() {
         //    console.log();
         //});
-
+        //console.log( selector );
         // Set all the variables to be checked against
         var family = $( '#' + mainID + ' #' + mainID + '-family' ).val();
 
@@ -531,10 +536,11 @@
                     link += '&subset=' + script;
                 }
 
-                if ( typeof (WebFont) !== "undefined" && WebFont ) {
-                    WebFont.load( {google: {families: [link]}} );
+                if (isSelecting === false) { 
+                    if ( typeof (WebFont) !== "undefined" && WebFont ) {
+                        WebFont.load( {google: {families: [link]}} );
+                    }
                 }
-
                 $( '#' + mainID + ' .redux-typography-google' ).val( true );
             } else {
                 $( '#' + mainID + ' .redux-typography-google' ).val( false );
@@ -557,25 +563,25 @@
             height = size;
         }
 
-        if ( size === '' ) {
+        if ( size === '' || size === undefined ) {
             $( '#' + mainID + ' .typography-font-size' ).val( '' );
         } else {
             $( '#' + mainID + ' .typography-font-size' ).val( size + units );
         }
 
-        if ( height === '' ) {
+        if ( height === '' || height === undefined ) {
             $( '#' + mainID + ' .typography-line-height' ).val( '' );
         } else {
             $( '#' + mainID + ' .typography-line-height' ).val( height + units );
         }
 
-        if ( word === '' ) {
+        if ( word === '' || word === undefined ) {
             $( '#' + mainID + ' .typography-word-spacing' ).val( '' );
         } else {
             $( '#' + mainID + ' .typography-word-spacing' ).val( word + units );
         }
 
-        if ( letter === '' ) {
+        if ( letter === '' || letter === undefined ) {
             $( '#' + mainID + ' .typography-letter-spacing' ).val( '' );
         } else {
             $( '#' + mainID + ' .typography-letter-spacing' ).val( letter + units );
@@ -640,7 +646,10 @@
 
         isSelecting = false;
 
-        redux_change( selector );
+        if ( ! skipCheck ) {
+            redux_change( selector );
+        }
+
 
     };
 })( jQuery );

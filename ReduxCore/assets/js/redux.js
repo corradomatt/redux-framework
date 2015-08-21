@@ -435,7 +435,7 @@
                                             $( this ).fadeOut( tipHideDuration );
                                             break;
                                         default:
-                                            $( this ).show( tipHideDuration );
+                                            $( this ).hide( tipHideDuration );
                                             break;
                                     }
                                 },
@@ -653,11 +653,11 @@
                 if ( typeof redux.field_objects != 'undefined' && redux.field_objects[type] && redux.field_objects[type] ) {
                     redux.field_objects[type].init();
                 }
-                if ( $( this ).hasClass( 'redux_remove_th' ) ) {
+                if ( !redux.customizer && $( this ).hasClass( 'redux_remove_th' )  ) {
 
                     var tr = $( this ).parents( 'tr:first' );
                     var th = tr.find( 'th:first' );
-                    if ( th.html().length > 0 ) {
+                    if ( th.html() && th.html().length > 0 ) {
                         $( this ).prepend( th.html() );
                         $( this ).find( '.redux_field_th' ).css( 'padding', '0 0 10px 0' );
                     }
@@ -980,11 +980,17 @@
         var show = false,
             checkValue_array,
             checkValue = data.checkValue,
-            operation = data.operation;
+            operation = data.operation,
+            arr;
 
         switch ( operation ) {
             case '=':
             case 'equals':
+//                if ($.isPlainObject(parentValue)) {
+//                    var arr = Object.keys(parentValue).map(function (key) {return parentValue[key]});
+//                    parentValue = arr;
+//                }
+
                 if ( $.isArray( parentValue ) ) {
                     $( parentValue[0] ).each(
                         function( idx, val ) {
@@ -1025,7 +1031,7 @@
             case '!=':
             case 'not':
                 if ( $.isArray( parentValue ) ) {
-                    $( parentValue[0] ).each(
+                    $( parentValue ).each(
                         function( idx, val ) {
                             if ( $.isArray( checkValue ) ) {
                                 $( checkValue ).each(
@@ -1109,9 +1115,24 @@
                 break;
 
             case 'contains':
+                if ($.isPlainObject(parentValue)) {
+                    arr = Object.keys(parentValue).map(function (key) {
+                        return parentValue[key];
+                    });
+                    parentValue = arr;
+                }
+
+                if ($.isPlainObject(checkValue)) {
+                    arr = Object.keys(checkValue).map(function (key) {
+                        return checkValue[key];
+                    });
+                    checkValue = arr;
+                }
+
                 if ( $.isArray( checkValue ) ) {
                     $( checkValue ).each(
                         function( idx, val ) {
+                            //console.log (val);
                             if ( parentValue.toString().indexOf( val ) !== -1 ) {
                                 show = true;
                             }
@@ -1126,6 +1147,20 @@
 
             case 'doesnt_contain':
             case 'not_contain':
+                if ($.isPlainObject(parentValue)) {
+                    arr = Object.keys(parentValue).map(function (key) {
+                        return parentValue[key];
+                    });
+                    parentValue = arr;
+                }
+
+                if ($.isPlainObject(checkValue)) {
+                    arr = Object.keys(checkValue).map(function (key) {
+                        return checkValue[key];
+                    });
+                    checkValue = arr;
+                }
+
                 if ( $.isArray( checkValue ) ) {
                     $( checkValue ).each(
                         function( idx, val ) {
@@ -1399,8 +1434,8 @@
                             $( '#redux-header' ).append( '<div class="rAds"></div>' );
                             el = $( '#redux-header' );
                         } else {
-                            $( '#customize-info .accordion-section-title' ).append( '<div class="rAds"></div>' );
-                            el = $( '#customize-info .accordion-section-title' );
+                            $('#customize-theme-controls ul').first().prepend('<li id="redux_rAds" class="accordion-section rAdsContainer" style="position: relative;"><div class="rAds"></div></li>');
+                            el = $( '#redux_rAds' );
                         }
 
                         el.css( 'position', 'relative' );

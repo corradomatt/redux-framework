@@ -5,7 +5,7 @@
      *
      * @author      Redux Framework
      * @package     ReduxFramework/Templates
-     * @version     3.5.4.18
+     * @version:    3.5.4.18
      */
 ?>
 <!-- Header Block -->
@@ -66,7 +66,9 @@
         }
 
         if ( $display ) {
+            do_action( "redux/page/{$this->parent->args['opt_name']}/section/before", $section );
             $this->output_section( $k );
+            do_action( "redux/page/{$this->parent->args['opt_name']}/section/after", $section );
         }
         //}
     ?></div><?php

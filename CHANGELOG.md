@@ -1,5 +1,142 @@
 # Redux Framework Changelog
 
+## 3.5.6.7
+* Added     setOption and getOption to Redux API.
+* Added     'hide_save' argument.
+
+## 3.5.6.6
+* Added:    'readonly' argument for textarea.
+
+## 3.5.6.5
+* Fixed:    #2545 - CSS validator error output misconfigured.
+* Fixed:    ACE adding escape slashes to quotes via CSS validation, causing improper error message.
+
+## 3.5.6.4
+* Added:    `ajax_save` arg for fields.  Setting to false will reload the options panel when the set option has changed.
+* Fixed:    #2532 - Spinner field arrow spacing off when dev_mode set to false due to missing `!important` CSS suffix.
+
+## 3.5.6.3
+* Added:    `autocomplete` arg to text field.  This is FALSE by default.
+
+## 3.5.6.2
+* Fixed:    Color RGBA field missing name_suffix.  Will now work in repeater extension.
+
+## 3.5.6.1
+* Fixed:    Index error regarding icon argument.
+
+## 3.5.6
+* Fixed     Customizer WP 4.3 final fixes.
+
+## 3.5.5.9
+* Fixed     #2500 - Conflict with outdated select2 in JW Player plugin.
+
+## 3.5.5.8
+* Modified: icon_type no longer needed for section icons. Now detects if URLs are provided for images.
+* Fixed:    Various customizer fixes. HTML in the customizer title.
+* Modified: Media URL now is 95% wide.
+* Modified: Select2 now 100% width instead of just resolve (that doesn't always work).
+
+## 3.5.5.7
+* Modified: Field enqueue method to allow for more flexibility.
+* Added:    Support for Airplane Mode plugin (https://github.com/norcross/airplane-mode) by @norcross. Thanks @chriscct7  #2463
+
+## 3.5.5.6
+* Fixed:    Undefined index in theme-check enhancements. Thanks @winwinwebdesign!
+* Removed:  SASS compiler & code. Note needed.
+* Fixed:    Color transparency live-update for Customizer for color, background, 
+            and color gradient fields.
+
+## 3.5.5.5
+* Fixed:    Undefined index when removing a section.
+
+## 3.5.5.4
+* Fixed:    Typography bug onload always saying settings have changed.
+* Modified: Added minified customizer JS.
+
+## 3.5.5.3
+* Fixed:    Redux CUSTOMIZER! YEA!
+
+## 3.5.5.2
+* Fixed:    Small echo in Redux API
+
+## 3.5.5.1
+* Fixed:    PHP 5.2 Theme-Check error.
+
+## 3.5.5
+* Fixed:    Date-time fixes with CSS overloading and positioning.
+
+## 3.5.4.35
+* Added:    Lite support for https://wordpress.org/plugins/plugin-dependencies/
+* Modified: CDN to be a more bulletproof solution (http://jsdelivr.net).
+* Modified: CDN alerts to be more clear, and have proper links.
+
+## 3.5.4.34
+* Fixed:    Bad code in raw field hosing up the entire panel.
+
+## 3.5.4.33
+* Modified: #2436 - Validation check for any validation type ending in 'not_empty' now recognized.
+
+## 3.5.4.32
+* Fixed:    Undefined index for undeclared variable in Theme-Check checks.
+* Fixed:    Annoying Redux Theme-Check notices.
+* Fixed:    How some functions were called.
+
+## 3.5.4.31
+* Fixed:    Theme-Check baby! Everything working as it should with extra theme-check hints to prepare
+            your theme for submission!
+* Fixed:    Better .org hinting for theme submission.
+* Modified: `forced_dev_mode_off` argument that will ensure dev_mode is ALWAYS off. 
+            PLEASE do not ship with this enabled. We will NOT provide any support for any instance that 
+            has this argument enabled. Disable and test prior to posting on our issue tracker.
+* Added:    `customizer_only` as a global arg that disables all of Redux except for the customizer, in 
+            preparation for our customizer integration.
+
+## 3.5.4.30
+* Modified: Dissmissable Redux Admin notices now use the WP 4.2 dismiss JS and Ajax. Pretty.
+* Modified: Admin notice code is now it's own isolated class inside core.
+* Modified: Use DB for admin notice, not flat-files. Boo.
+* Modified: Sample configs not to cause errors if multiple users use the same function name.
+* Fixed:    CDN internationalization class.
+* Modified: Parsedown so as not to throw a shortcode error that didn't actually exist.
+
+## 3.5.4.29
+* Fixed:    #2446 - Non google font choice not saving in certain instances.
+
+## 3.5.4.28
+* Fixed:    Added additional check in redux.js to stop errors with panels containing multiple raw fields.
+* Fixed:    Hopefully, the issue of settings not saving on first install when using the Redux API.
+
+## 3.5.4.27
+* Fixed:    Set use_cdn argument to true, by default.
+
+## 3.5.4.26
+* Fixed     #2437 - undefined value set to blank line height.
+
+## 3.5.4.25
+* Fixed:    #2429 - Required evaluator 'contains' not working properly with multi_check
+
+## 3.5.4.24
+* Fixed:    #2426 - Section field not indenting.
+
+## 3.5.4.23
+* Fixed:    Divider field not rendering properly.
+* Added:    `fieldset_class` argument for fields.  Thanks @Enchiridion.
+* Added:    Option to set checkbox label.  Thanks @Enchiridion.
+* Added:    javascript .trigger('change') to switch, spinner, and image_select.  Thanks @Enchiridion.
+
+## 3.5.4.22
+* Modified: Ajax change output of error and notice via hooks.
+
+## 3.5.4.21
+* Fixed:    #2414 - Bad ajax save due to mis-initialized variable.
+
+## 3.5.4.20
+* Fixed:    CSS in metabox fields all wanky.
+* Added:    'reload_on_change' arg for fields, to force page reload after setting change.
+
+## 3.5.4.19
+* Fixed:    #2377 - Replaced mysql_gets_server_info with $wpdb.
+
 ## 3.5.4.18
 * Modified: Templates to properly excape values.
 * Fixed:    Import/Export to properly be full-width and use lazy-load JS.
