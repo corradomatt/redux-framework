@@ -338,7 +338,7 @@
 
                     // Tracking
                     if ( isset( $this->args['allow_tracking'] ) && $this->args['allow_tracking'] && Redux_Helpers::isTheme( __FILE__ ) ) {
-                        $this->_tracking();
+                        //$this->_tracking();
                     }
 
                     // Options page
@@ -411,21 +411,21 @@
                     add_action( "wp_ajax_" . $this->args['opt_name'] . '_ajax_save', array( $this, "ajax_save" ) );
 
                     if ( $this->args['dev_mode'] == true || Redux_Helpers::isLocalHost() == true ) {
-                        require_once 'core/dashboard.php';
-
-                        if ( ! isset ( $GLOBALS['redux_notice_check'] ) ) {
-                            require_once 'core/newsflash.php';
-
-                            $params = array(
-                                'dir_name'    => 'notice',
-                                'server_file' => 'http://www.reduxframework.com/' . 'wp-content/uploads/redux/redux_notice.json',
-                                'interval'    => 3,
-                                'cookie_id'   => 'redux_blast',
-                            );
-
-                            new reduxNewsflash( $this, $params );
-                            $GLOBALS['redux_notice_check'] = 1;
-                        }
+                        //require_once 'core/dashboard.php';
+                        //
+                        //if ( ! isset ( $GLOBALS['redux_notice_check'] ) ) {
+                        //    require_once 'core/newsflash.php';
+                        //
+                        //    $params = array(
+                        //        'dir_name'    => 'notice',
+                        //        'server_file' => 'http://www.reduxframework.com/' . 'wp-content/uploads/redux/redux_notice.json',
+                        //        'interval'    => 3,
+                        //        'cookie_id'   => 'redux_blast',
+                        //    );
+                        //
+                        //    new reduxNewsflash( $this, $params );
+                        //    $GLOBALS['redux_notice_check'] = 1;
+                        //}
                     }
                 }
 
@@ -645,11 +645,11 @@
 // get_instance()
 
             private function _tracking() {
-                if ( file_exists( dirname( __FILE__ ) . '/inc/tracking.php' ) ) {
-                    require_once dirname( __FILE__ ) . '/inc/tracking.php';
-                    $tracking = Redux_Tracking::get_instance();
-                    $tracking->load( $this );
-                }
+                //if ( file_exists( dirname( __FILE__ ) . '/inc/tracking.php' ) ) {
+                //    require_once dirname( __FILE__ ) . '/inc/tracking.php';
+                //    $tracking = Redux_Tracking::get_instance();
+                //    $tracking->load( $this );
+                //}
             }
 // _tracking()
 

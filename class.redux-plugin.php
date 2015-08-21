@@ -154,9 +154,10 @@
                 }
 
                 // Include demo config, if demo mode is active
-                if ( $this->options['demo'] && file_exists( dirname( __FILE__ ) . '/sample/sample-config.php' ) ) {
-                    require_once dirname( __FILE__ ) . '/sample/sample-config.php';
-                }
+                // Remove as unnecessary
+                //if ( $this->options['demo'] && file_exists( dirname( __FILE__ ) . '/sample/sample-config.php' ) ) {
+                //    require_once dirname( __FILE__ ) . '/sample/sample-config.php';
+                //}
             }
 
             /**
@@ -308,10 +309,10 @@
              * @return      void
              */
             private static function single_activate() {
-                $notices   = get_option( 'ReduxFrameworkPlugin_ACTIVATED_NOTICES', array() );
-                $notices[] = __( 'Redux Framework has an embedded demo.', 'redux-framework' ) . ' <a href="./plugins.php?ReduxFrameworkPlugin=demo">' . __( 'Click here to activate the sample config file.', 'redux-framework' ) . '</a>';
-
-                update_option( 'ReduxFrameworkPlugin_ACTIVATED_NOTICES', $notices );
+                //$notices   = get_option( 'ReduxFrameworkPlugin_ACTIVATED_NOTICES', array() );
+                //$notices[] = __( 'Redux Framework has an embedded demo.', 'redux-framework' ) . ' <a href="./plugins.php?ReduxFrameworkPlugin=demo">' . __( 'Click here to activate the sample config file.', 'redux-framework' ) . '</a>';
+                //
+                //update_option( 'ReduxFrameworkPlugin_ACTIVATED_NOTICES', $notices );
             }
 
             /**
@@ -322,15 +323,15 @@
              * @return      void
              */
             public function admin_notices() {
-                do_action( 'ReduxFrameworkPlugin_admin_notice' );
-                $notices = get_option( 'ReduxFrameworkPlugin_ACTIVATED_NOTICES', '' );
-                if ( !empty( $notices ) ) {
-                    foreach ( $notices as $notice ) {
-                        echo '<div class="updated notice is-dismissible"><p>' . $notice . '</p></div>';
-                    }
-
-                    delete_option( 'ReduxFrameworkPlugin_ACTIVATED_NOTICES' );
-                }
+                //do_action( 'ReduxFrameworkPlugin_admin_notice' );
+                //$notices = get_option( 'ReduxFrameworkPlugin_ACTIVATED_NOTICES', '' );
+                //if ( !empty( $notices ) ) {
+                //    foreach ( $notices as $notice ) {
+                //        echo '<div class="updated notice is-dismissible"><p>' . $notice . '</p></div>';
+                //    }
+                //
+                //    delete_option( 'ReduxFrameworkPlugin_ACTIVATED_NOTICES' );
+                //}
             }
 
             /**
@@ -353,27 +354,27 @@
              * @return      void
              */
             public function options_toggle_check() {
-                global $pagenow;
-
-                if ( $pagenow == 'plugins.php' && is_admin() && ! empty( $_GET['ReduxFrameworkPlugin'] ) ) {
-                    $url = './plugins.php';
-
-                    if ( $_GET['ReduxFrameworkPlugin'] == 'demo' ) {
-                        if ( $this->options['demo'] == false ) {
-                            $this->options['demo'] = true;
-                        } else {
-                            $this->options['demo'] = false;
-                        }
-                    }
-
-                    if ( is_multisite() && is_network_admin() && $this->plugin_network_activated ) {
-                        update_site_option( 'ReduxFrameworkPlugin', $this->options );
-                    } else {
-                        update_option( 'ReduxFrameworkPlugin', $this->options );
-                    }
-
-                    wp_redirect( $url );
-                }
+                //global $pagenow;
+                //
+                //if ( $pagenow == 'plugins.php' && is_admin() && ! empty( $_GET['ReduxFrameworkPlugin'] ) ) {
+                //    $url = './plugins.php';
+                //
+                //    if ( $_GET['ReduxFrameworkPlugin'] == 'demo' ) {
+                //        if ( $this->options['demo'] == false ) {
+                //            $this->options['demo'] = true;
+                //        } else {
+                //            $this->options['demo'] = false;
+                //        }
+                //    }
+                //
+                //    if ( is_multisite() && is_network_admin() && $this->plugin_network_activated ) {
+                //        update_site_option( 'ReduxFrameworkPlugin', $this->options );
+                //    } else {
+                //        update_option( 'ReduxFrameworkPlugin', $this->options );
+                //    }
+                //
+                //    wp_redirect( $url );
+                //}
             }
 
             /**
